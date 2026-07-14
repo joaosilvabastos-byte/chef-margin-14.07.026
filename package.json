@@ -1,0 +1,24 @@
+{
+  "name": "chef-margin-tracker",
+  "version": "1.0.5",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit || vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native-web": "^0.21.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.3.3",
+    "vite": "^5.4.19"
+  }
+}
