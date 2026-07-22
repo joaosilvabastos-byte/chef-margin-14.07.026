@@ -2,17 +2,17 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "co.chefmargin.app"
-    compileSdk 35
+    compileSdk 36 // <-- ATUALIZADO PARA API 36
     defaultConfig {
         applicationId "com.joaobastos.chefmargin"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion 35
-        versionCode 26
-        versionName "1.1.1"
+        targetSdkVersion 36 // <-- ATUALIZADO PARA API 36
+        versionCode 28 // <-- AUMENTADO PARA 28 (era 27)
+        versionName "1.1.3" // <-- NOVA VERSÃO (era 1.1.2)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
-             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
-             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+            // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
@@ -26,7 +26,7 @@ android {
 
 repositories {
     flatDir{
-        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+        dirs "${project.rootDir}/capacitor-cordova-android-plugins/src/main/libs", 'libs'
     }
 }
 
@@ -39,7 +39,13 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
-    implementation project(':capacitor-cordova-android-plugins')
+    
+    if (project.findProject(':capacitor-cordova-android-plugins')) {
+        implementation project(':capacitor-cordova-android-plugins')
+    }
+
+    // Adicionado para satisfazer os requisitos da Google Play (Billing 8.0.0+)
+    implementation 'com.android.billingclient:billing:8.0.0'
 }
 
 apply from: 'capacitor.build.gradle'
