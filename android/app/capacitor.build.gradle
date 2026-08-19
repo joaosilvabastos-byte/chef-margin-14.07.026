@@ -9,7 +9,11 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+<<<<<<< HEAD
     implementation project(':revenuecat-purchases-capacitor')
+=======
+
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 
 }
 

@@ -38,5 +38,9 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< HEAD
+=======
+    <uses-permission android:name="android.permission.INTERNET" />
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
     <uses-permission android:name="com.android.vending.BILLING" />
 </manifest>

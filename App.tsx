@@ -3,13 +3,19 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 //import * as Sharing from 'expo-sharing';
 //import * as DocumentPicker from 'expo-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+<<<<<<< HEAD
 import { Purchases } from '@revenuecat/purchases-capacitor';
+=======
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 // @ts-ignore
 import './index.css';
 import { Share } from 'react-native';
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 // ── i18n ────────────────────────────────────────────────────────────────────
 type Lang = "PT" | "ES" | "FR" | "EN";
 const LANG_FLAGS: Record<Lang, string> = { 
@@ -908,6 +914,7 @@ const totalCost = (activeRecipes && activeRecipes.length > 0)
 }
 
 // ── Main App ──────────────────────────────────────────────────────────────
+<<<<<<< HEAD
 export default function App() {
   
   // Definimos o user fixo localmente para não quebrar o resto do layout da app
@@ -941,16 +948,47 @@ export default function App() {
     };
     initRC();
   }, []);
+=======
+  export default function App() {
+    
+    // Definimos o user fixo localmente para não quebrar o resto do layout da app
+    const [user, setUser] = useState<any>({ displayName: "Chef", email: "local@chef.com" });
+
+
+    
+    // O useEffect fica vazio, já não precisa de ouvir o Firebase para nada!
+    useEffect(() => {
+      // Autenticação do Firebase removida com sucesso.
+    }, []);
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 
     
 
     // ── PRO Modal ─────────────────────────────────────────────────────────────
+<<<<<<< HEAD
 function ProModal({ onClose, t, handlePurchaseGooglePlay }: any) {
+=======
+function ProModal({ onClose, t, setIsPro, setShowProModal, proModalCallback, setProModalCallback }: any) {
+  const handleActivate = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsPro(true);
+    // Chave consistente com o STORAGE_PREFIX usado no loadLS (linha 975)
+    localStorage.setItem(STORAGE_PREFIX + "PRO", "true");
+    setShowProModal(false);
+    // Executar o callback pendente (ex: guardar receita após activar Pro)
+    if (typeof proModalCallback === "function") {
+      proModalCallback();
+      if (setProModalCallback) setProModalCallback(null);
+    }
+  };
+
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
   return (
     <div className="pro-modal-overlay" onClick={onClose}>
       <div className="pro-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-title">{t.proModal_title}</div>
         <div className="modal-price">7.5€/mês + IVA</div>
+<<<<<<< HEAD
         <p style={{ color: '#fff', fontSize: '13px', textAlign: 'center', marginBottom: '20px', opacity: 0.8 }}>
           {t.proModal_desc}
         </p>
@@ -960,6 +998,11 @@ function ProModal({ onClose, t, handlePurchaseGooglePlay }: any) {
           {t.proModal_cta}
         </button>
 
+=======
+        <button className="modal-btn-cta" onClick={handleActivate}>
+          {t.proModal_cta}
+        </button>
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
         <button className="modal-btn-skip" onClick={(e) => { e.stopPropagation(); onClose(); }}>
           {t.proModal_cancel}
         </button>
@@ -982,6 +1025,7 @@ function ProModal({ onClose, t, handlePurchaseGooglePlay }: any) {
   const [lang, setLang] = useState<Lang>(() => loadLS<Lang>(STORAGE_PREFIX + "LANG") || "PT");
   const t = TR[lang];
   const setLangSave = (l: Lang) => { setLang(l); saveLS(STORAGE_PREFIX + "LANG", l); };
+<<<<<<< HEAD
  // Função auxiliar para evitar erros de referência
 const verificarSubscricaoNaGooglePlay = () => {
   console.log("A verificar subscrição na Google Play...");
@@ -1056,6 +1100,36 @@ const handleSecretCodeEntry = () => {
     alert("Código ou email não reconhecido.");
   }
 };
+=======
+  const iniciarLoginGoogleNativo = () => {
+    try {
+      // @ts-ignore
+      if (window.google && window.google.accounts && window.google.accounts.id) {
+        // @ts-ignore
+        window.google.accounts.id.initialize({
+          client_id: "713374828773-v738tt14vmscl3r4n4clre3v0ptb7p25.apps.googleusercontent.com",
+          callback: (response: any) => {
+            console.log("Login efetuado com sucesso no Google!", response);
+            setUser({ displayName: "Chef Margin Pro", email: "joaosilvabastos@gmail.com" });
+            setIsPro(true);
+            localStorage.setItem(STORAGE_PREFIX + "PRO", "true");
+          }
+        });
+        // @ts-ignore
+        window.google.accounts.id.prompt();
+      } else {
+        const email = prompt("Google Sign-In Direct (PC):\nIntroduza o seu email:", "joaosilvabastos@gmail.com");
+        if (email) {
+          setUser({ displayName: "Chef Margin Pro", email: email });
+          setIsPro(true);
+          localStorage.setItem(STORAGE_PREFIX + "PRO", "true");
+        }
+      }
+    } catch (err) {
+      console.error("Erro ao chamar o Google Nativo:", err);
+    }
+  };
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
   // Currency: $ for EN, € for others
   const currency = lang === "EN" ? "$" : "€";
   const fmt = useCallback((n: number | any) => {
@@ -1065,12 +1139,28 @@ const handleSecretCodeEntry = () => {
 }, [lang]);
 
   const [activeSection, setActiveSection] = useState<"dashboard" | "recipes" | "create" | "warehouse" | "settings">("dashboard");
+<<<<<<< HEAD
   const [isPro, setIsPro] = useState<boolean>(false);
   const [showProModal, setShowProModal] = useState(false);
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
   const [deleteRecipeKey, setDeleteRecipeKey] = useState<string | null>(null);
 
   
+=======
+  const [isPro, setIsPro] = useState<boolean>(() => loadLS<boolean>(STORAGE_PREFIX + "PRO") || false);
+  const [showProModal, setShowProModal] = useState(false);
+  const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
+  const [deleteRecipeKey, setDeleteRecipeKey] = useState<string | null>(null);
+  const [proModalCallback, setProModalCallback] = useState<(() => void) | null>(null);
+
+  // Toast
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const showToast = useCallback((msg: string) => {
+    const id = newId();
+    setToasts((prev) => [...prev, { id, message: msg }]);
+    setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 3500);
+  }, []);
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 
   // Recipe form state
   const [recipeName, setRecipeName] = useState("");
@@ -1187,7 +1277,11 @@ const handleGlobalChange = (val: string, setter: any, field?: string) => {
   useEffect(() => {
     setIngredients((prev) => prev.map((ing) => {
       const w = warehouseSaved.find((ww) => ww.name.toLowerCase() === ing.name.toLowerCase());
+<<<<<<< HEAD
             return w ? { ...ing, price: w.price, unit: w.unit, iva: w.iva } : ing;
+=======
+      return w ? { ...ing, price: w.price, unit: w.unit, iva: w.iva } : ing;
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
     }));
   }, [warehouseSaved, energyData]); // <--- ACRESCENTA O energyData AQUI!
 
@@ -1234,7 +1328,20 @@ return {
   };
 
  const activatePro = () => {
+<<<<<<< HEAD
   handleSuccessPro();
+=======
+  setIsPro(true);
+  localStorage.setItem(STORAGE_PREFIX + "PRO", "true");
+  setShowProModal(false);
+  
+  // Usando a tua chave de tradução existente
+  if (typeof showToast === 'function') {
+    showToast(t.proSaved);
+  }
+  
+  console.log("Ativação finalizada.");
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 };
 
 const clearForm = () => {
@@ -1640,6 +1747,7 @@ const ivaTotal = allRecipesIva
 
       <ToastContainer toasts={toasts} />
       
+<<<<<<< HEAD
  {showProModal && (
   <ProModal
     onClose={() => { setShowProModal(false); setProModalCallback(null); }}
@@ -1647,6 +1755,16 @@ const ivaTotal = allRecipesIva
     lang={lang}
     handlePurchaseGooglePlay={handlePurchaseGooglePlay}
     handleSecretCodeEntry={handleSecretCodeEntry}
+=======
+  {showProModal && (
+  <ProModal 
+    onClose={() => { setShowProModal(false); setProModalCallback(null); }} 
+    t={t} 
+    setIsPro={setIsPro}
+    setShowProModal={setShowProModal}
+    proModalCallback={proModalCallback}
+    setProModalCallback={setProModalCallback}
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
   />
 )}
       {showDeleteAllModal && (
@@ -1975,13 +2093,17 @@ const ivaTotal = allRecipesIva
 {/* REMOVE O DIV COM POSITION FIXED */}
 {/* Mantém o botão dentro do fluxo principal da tua página */}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 <div style={{ 
   marginTop: '20px',    // Espaçamento natural entre o gráfico e o botão
   display: 'flex',      // Garante que o conteúdo fica centrado
   justifyContent: 'center',
   width: '100%'         // Ocupa a largura toda
 }}>
+<<<<<<< HEAD
  <button  
   onClick={isPro ? undefined : handlePurchaseGooglePlay}
   disabled={isPro}
@@ -2004,6 +2126,28 @@ const ivaTotal = allRecipesIva
   {isPro ? "Versão PRO Ativa" : t.subscribe}
   
 </button>
+=======
+  <button 
+    onClick={() => requirePro(() => {})}
+    style={{ 
+      backgroundColor: '#B2BCBF', 
+      color: 'white', 
+      padding: '10px 20px', 
+      borderRadius: '8px', 
+      border: 'none', 
+      cursor: 'pointer', 
+      fontWeight: 'bold', 
+      fontSize: '13px', 
+      boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      whiteSpace: 'nowrap'
+    }}
+  >
+    {t.subscribe}
+  </button>
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
 </div>
 </main>
 
@@ -2744,6 +2888,7 @@ let power = val === "Eletricidade" ? 0 : val === "Gás" ? 0 : 0;
     
     {/* --- BLOCO EXPORTAR / BACKUP --- */}
     <div className="settings-group" style={{ marginTop: '0px' }}> 
+<<<<<<< HEAD
       <div className="settings-title">📁 ACESSO PRO</div>
       <button
         className="settings-action"
@@ -2755,6 +2900,8 @@ let power = val === "Eletricidade" ? 0 : val === "Gás" ? 0 : 0;
     </div>
 
     <div className="settings-group" style={{ marginTop: '20px' }}>
+=======
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
       <div className="settings-title">📁 EXPORTAR / BACKUP</div>
       
       <select 

@@ -1,7 +1,11 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
+<<<<<<< HEAD
   appId: 'com.joaobastos.chefmargin',
+=======
+  appId: 'co.chefmargin.app',
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
   appName: 'ChefMargin',
   webDir: 'dist',
   plugins: {

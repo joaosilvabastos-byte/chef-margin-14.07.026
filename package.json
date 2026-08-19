@@ -9,8 +9,11 @@
   "dependencies": {
     "@capacitor/android": "^6.0.0",
     "@capacitor/core": "^6.0.0",
+<<<<<<< HEAD
     "@react-native-async-storage/async-storage": "^3.1.1",
     "@revenuecat/purchases-capacitor": "^13.4.0",
+=======
+>>>>>>> 1ffe12e49144d1e3561fe845fc60bd4dd968e06b
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-native-web": "^0.21.2"
